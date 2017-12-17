@@ -1,6 +1,7 @@
 <template>
     <div id="app">
         <h1>{{title}}</h1>
+        <!-- <div style="text-align:center;"><img src="./assets/top.jpg" alt=""></div> -->
         <ul class="todos">
             <li>
                 <input v-model="newTodo"
@@ -33,7 +34,7 @@
         data () {
             return {
                 newTodo:'',
-                title: 'vue-todos',
+                title: '备忘记事',
                 todos: []
             }
         },
