@@ -57,6 +57,11 @@ module.exports = {
           name: utils.assetsPath('media/[name].[hash:7].[ext]')
         }
       },
+      {//配置less样式表加载器
+        test: /\.less$/,
+        loader: 'style-loader!css-loader!less-loader',
+        include: []
+      },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         loader: 'url-loader',
