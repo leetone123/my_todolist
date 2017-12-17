@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <h1>{{title}}</h1>
-        <!-- <div style="text-align:center;"><img src="./assets/top.jpg" alt=""></div> -->
+        <div style="text-align:center;"><img src="./assets/top.jpg" alt=""></div>
         <ul class="todos">
             <li>
                 <input v-model="newTodo"
