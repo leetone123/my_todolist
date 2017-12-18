@@ -28,7 +28,7 @@
     import moment from 'moment'
     import 'moment/locale/zh-cn'
     moment.locale('zh-cn')
-
+    
     export default {
         name: 'app',
         data () {
@@ -52,6 +52,20 @@
             date(val){
                 return moment(val).calendar()
             }
+        },
+        mounted: function () {
+        // GET /someUrl
+            this.$http.get('http://localhost:9999/task/list').then(response => {
+                 var json = JSON.parse(response.data.result);
+                 var len = json.resultList.length;
+                 this.todos = [];
+                 for(var i=0;i<len;i++)
+                 {
+                     this.todos.push({value:json.resultList[i].taskName,created:json.resultList[i].createDate,done:json.resultList[i].delFlag==1});
+                 }
+            }, response => {
+                console.log("error");
+            });
         },
         methods: {
             addItem() {
