@@ -55,8 +55,9 @@
         },
         mounted: function () {
         // GET /someUrl
-            this.$http.get('http://localhost:9999/task/list').then(response => {
+            this.$http.get('http://101.132.160.79:9999/task/list').then(response => {
                  var json = JSON.parse(response.data.result);
+                 console.log(json)
                  var len = json.resultList.length;
                  this.todos = [];
                  for(var i=0;i<len;i++)
@@ -74,7 +75,23 @@
                     created: Date.now(),
                     done: false
                 });
-                this.saveToStore();
+                //开始保存数据到数据库
+                this.$http.post('http://101.132.160.79:9999/task/addTask',
+                    {
+                        taskName: this.newTodo,
+                        createDate: Date.now(),
+                        delFlag: '0',
+                        userId: '001'
+                    }).then(response=>
+                    {
+                        console.log(response.data)
+                    },
+                    response=>
+                    {
+                        console.log('error')
+                    }
+                )
+                // this.saveToStore();
                 this.newTodo = ''
             },
             delItem (todo) {
@@ -82,7 +99,7 @@
                 this.saveToStore()
             },
             saveToStore(){
-                localStorage.setItem('VUE-TODOS', JSON.stringify(this.todos))
+                // localStorage.setItem('VUE-TODOS', JSON.stringify(this.todos))
             }
         }
     }
