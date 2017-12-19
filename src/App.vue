@@ -29,6 +29,9 @@
     import 'moment/locale/zh-cn'
     moment.locale('zh-cn')
     
+    //使用axios配置文件
+    import axios from 'axios'
+    import config from '../config/axios_config'
     export default {
         name: 'app',
         data () {
@@ -76,21 +79,36 @@
                     done: false
                 });
                 //开始保存数据到数据库
-                this.$http.post('http://localhost:9999/task/addTask',
-                    {   
+                axios.post('addTask.html',
+                    {
                         taskName: this.newTodo,
                         createDate: Date.now(),
                         delFlag: '0',
                         userId: '001'
-                    }).then(response=>
-                    {
-                        console.log(response.data)
+                    },
+                    config)
+                    .then(function(res){
+                        console.log(res);
                     })
-                    .catch(response=>
-                    {
-                        console.log('error')
-                    }
-                )
+                    .catch(function(err){
+                        console.log(err);
+                })
+
+                // this.$http.post('http://localhost:9999/task/addTask',
+                //     {   
+                //         taskName: this.newTodo,
+                //         createDate: Date.now(),
+                //         delFlag: '0',
+                //         userId: '001'
+                //     }).then(response=>
+                //     {
+                //         console.log(response.data)
+                //     })
+                //     .catch(response=>
+                //     {
+                //         console.log('error')
+                //     }
+                // )
                 // this.saveToStore();
                 this.newTodo = ''
             },
