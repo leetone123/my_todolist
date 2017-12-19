@@ -55,7 +55,7 @@
         },
         mounted: function () {
         // GET /someUrl
-            this.$http.get('http://101.132.160.79:9999/task/list').then(response => {
+            this.$http.get('http://localhost:9999/task/list').then(response => {
                  var json = JSON.parse(response.data.result);
                  console.log(json)
                  var len = json.resultList.length;
@@ -76,8 +76,8 @@
                     done: false
                 });
                 //开始保存数据到数据库
-                this.$http.post('http://101.132.160.79:9999/task/addTask',
-                    {
+                this.$http.post('http://localhost:9999/task/addTask',
+                    {   
                         taskName: this.newTodo,
                         createDate: Date.now(),
                         delFlag: '0',
@@ -85,8 +85,8 @@
                     }).then(response=>
                     {
                         console.log(response.data)
-                    },
-                    response=>
+                    })
+                    .catch(response=>
                     {
                         console.log('error')
                     }
