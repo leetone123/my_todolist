@@ -12,7 +12,7 @@
             <li v-for="(todo,index) in todos"
                 :class="{'checked':todo.done}">
                 <input type="checkbox"
-                       @change="saveToStore"
+                       @change="addItem"
                        v-model="todo.done"
                 />
                 <label style="display:none">{{todo.id}}</label>
@@ -57,7 +57,7 @@
         methods: {
             getList() {
                 // GET /someUrl
-                this.$http.get('http://localhost:9999/task/list').then(response => {
+                this.$http.get('/task/list').then(response => {
                     var json = JSON.parse(response.data.result);
                     console.log(json)
                     var len = json.resultList.length;
@@ -80,15 +80,15 @@
                         userId: '001'
                     },
                     config)
-                    .then(function(res){
+                    .then(res => {
                         console.log(res);
+                        //刷新页面
+                        this.getList()
                     })
                     .catch(function(err){
                         console.log(err);
                 })
-                this.newTodo = ''
-                this.todos =''
-                this.getList();
+                //this.newTodo = ''
             },
             delItem (todo) {
                 this.todos = this.todos.filter((x) => x !== todo)
@@ -99,11 +99,11 @@
                     taskId: todo.id
                 },config).then(response=>{
                     console.log(response.data)
+                    //刷新页面
+                    this.getList();
                 }).catch(response=>{
                     console.log('error')
                 })
-                this.todos =''
-                this.getList();
             }
         }
     }

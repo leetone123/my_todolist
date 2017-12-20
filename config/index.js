@@ -10,7 +10,19 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      //设置反向代理
+      '/task':{
+        //这里是我配置的连接的服务器地址
+        // target:'http://192.168.1.175:8080',
+        target:'http://localhost:9999',
+        changeOrigin: true,
+        pathRewrite:{
+          '^/task': '/task'
+        }
+      }
+
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
