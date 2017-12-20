@@ -14,7 +14,9 @@
                 <input type="checkbox"
                        @change="saveToStore"
                        v-model="todo.done"
-                /><label>{{ index+1 }}.{{ todo.value }}</label>
+                />
+                <label style="display:none">{{todo.id}}</label>
+                <label>{{ index+1 }}.{{ todo.value }}</label>
                 <time>{{ todo.created | date }}</time>
                 <button @click.prevent="delItem(todo)"></button>
             </li>
@@ -44,47 +46,36 @@
             }
         },
         created (){
-            if (this.is_initialized) {
-                this.todos = JSON.parse(localStorage.getItem('VUE-TODOS'))
-            }
-        },
-        computed: {
-            is_initialized (){
-                return localStorage.getItem('VUE-TODOS') != null
-            }
+            this.getList();
         },
         filters: {
             date(val){
-                return moment(val).calendar()
+                //不知道为何转换出来的时间比数据库的时间多了14小时，所以这里做减法
+                return moment(val).subtract(14,'hours').calendar()
             }
         },
-        mounted: function () {
-        // GET /someUrl
-            this.$http.get('http://localhost:9999/task/list').then(response => {
-                 var json = JSON.parse(response.data.result);
-                 console.log(json)
-                 var len = json.resultList.length;
-                 this.todos = [];
-                 for(var i=0;i<len;i++)
-                 {
-                     this.todos.push({value:json.resultList[i].taskName,created:json.resultList[i].createDate,done:json.resultList[i].delFlag==1});
-                 }
-            }, response => {
-                console.log("error");
-            });
-        },
         methods: {
-            addItem() {
-                this.todos.push({
-                    value: this.newTodo,
-                    created: Date.now(),
-                    done: false
+            getList() {
+                // GET /someUrl
+                this.$http.get('http://localhost:9999/task/list').then(response => {
+                    var json = JSON.parse(response.data.result);
+                    console.log(json)
+                    var len = json.resultList.length;
+                    this.todos = [];
+                    for(var i=0;i<len;i++)
+                    {
+                        this.todos.push({id:json.resultList[i].id,value:json.resultList[i].taskName,created:json.resultList[i].createDate,done:json.resultList[i].delFlag==1});
+                    }
+                }, response => {
+                    console.log("error");
                 });
+            },
+            addItem() {                
                 //开始保存数据到数据库
                 axios.post('addTask.html',
                     {
                         taskName: this.newTodo,
-                        createDate: formatDate(new Date(),'yyyy-MM-dd HH:mm:ss'),
+                        // createDate: formatDate(new Date(),"yyyy-MM-dd HH:mm:ss"),
                         delFlag: '0',
                         userId: '001'
                     },
@@ -95,31 +86,24 @@
                     .catch(function(err){
                         console.log(err);
                 })
-
-                // this.$http.post('http://localhost:9999/task/addTask',
-                //     {   
-                //         taskName: this.newTodo,
-                //         createDate: Date.now(),
-                //         delFlag: '0',
-                //         userId: '001'
-                //     }).then(response=>
-                //     {
-                //         console.log(response.data)
-                //     })
-                //     .catch(response=>
-                //     {
-                //         console.log('error')
-                //     }
-                // )
-                // this.saveToStore();
                 this.newTodo = ''
+                this.todos =''
+                this.getList();
             },
             delItem (todo) {
                 this.todos = this.todos.filter((x) => x !== todo)
-                this.saveToStore()
-            },
-            saveToStore(){
-                // localStorage.setItem('VUE-TODOS', JSON.stringify(this.todos))
+                console.log(todo.id)
+                //同时删除数据库数据
+                axios.post('delete.html',
+                {
+                    taskId: todo.id
+                },config).then(response=>{
+                    console.log(response.data)
+                }).catch(response=>{
+                    console.log('error')
+                })
+                this.todos =''
+                this.getList();
             }
         }
     }
