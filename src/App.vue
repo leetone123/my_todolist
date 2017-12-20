@@ -32,6 +32,8 @@
     //使用axios配置文件
     import axios from 'axios'
     import config from '../config/axios_config'
+    //使用日期格式化插件
+    import {formatDate} from '../utils/date'
     export default {
         name: 'app',
         data () {
@@ -82,7 +84,7 @@
                 axios.post('addTask.html',
                     {
                         taskName: this.newTodo,
-                        createDate: Date.now(),
+                        createDate: formatDate(new Date(),'yyyy-MM-dd HH:mm:ss'),
                         delFlag: '0',
                         userId: '001'
                     },
