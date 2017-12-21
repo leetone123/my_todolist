@@ -58,11 +58,7 @@
         methods: {
             getList() {
                 // GET /someUrl
-<<<<<<< HEAD
-                this.$http.get('/task/list').then(response => {
-=======
                 axios.get('list.html').then(response => {
->>>>>>> 6849be6229971d9b56a0fa24dfba9ef7f18eecc6
                     var json = JSON.parse(response.data.result);
                     console.log(json)
                     var len = json.resultList.length;
@@ -91,17 +87,6 @@
                         userId: '001'
                     },
                     config)
-<<<<<<< HEAD
-                    .then(res => {
-                        console.log(res);
-                        //刷新页面
-                        this.getList()
-                    })
-                    .catch(function(err){
-                        console.log(err);
-                })
-                //this.newTodo = ''
-=======
                     .then(response =>{
                         console.log(response.data);
                         //获取请求后刷新页面
@@ -110,7 +95,6 @@
                         console.log(err);
                 })
                 this.newTodo = ''
->>>>>>> 6849be6229971d9b56a0fa24dfba9ef7f18eecc6
             },
             delItem (todo) {
                 this.todos = this.todos.filter((x) => x !== todo)
@@ -121,10 +105,6 @@
                     taskId: todo.id
                 },config).then(response=>{
                     console.log(response.data)
-<<<<<<< HEAD
-                    //刷新页面
-                    this.getList();
-=======
                     //获取请求后刷新页面
                     this.getList();
                 }).catch(response=>{
@@ -141,7 +121,6 @@
                     console.log(response.data)
                     //刷新页面
                     this.getList()
->>>>>>> 6849be6229971d9b56a0fa24dfba9ef7f18eecc6
                 }).catch(response=>{
                     console.log('error')
                 })
