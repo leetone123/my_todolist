@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <h1>{{title}}</h1>
-        <div style="text-align:center;"><img src="./assets/top.jpg" alt=""></div>
+        <div class="top-img" ><img src="./assets/top.jpg" alt=""></div>
         <ul class="todos">
             <li>
                 <input v-model="newTodo"
@@ -16,7 +16,7 @@
                        v-model="todo.done"
                 />
                 <label @click.prevent="updateItem(todo)">{{ index+1 }}.{{ todo.value }}</label>
-                <time class="finished" v-if="todo.finished!=null">完成于：{{ todo.finished | date }}</time>
+                <time class="finished" v-if="todo.done==true">完成于：{{ todo.finished | date }}</time>
                 <time>{{ todo.created | date }}</time>
                 <button @click.prevent="delItem(todo)"></button>
             </li>
@@ -58,7 +58,7 @@
         methods: {
             getList() {
                 // GET /someUrl
-                axios.get('list.html').then(response => {
+                axios.post('list.html',{},config).then(response => {
                     var json = JSON.parse(response.data.result);
                     console.log(json)
                     var len = json.resultList.length;
@@ -75,7 +75,7 @@
                     }
                 }, response => {
                     console.log("error");
-                });
+                },config);
             },
             addItem() {                
                 //开始保存数据到数据库
@@ -130,6 +130,14 @@
 </script>
 
 <style>
+.top-img{
+    text-align:center;
+}
+.top-img img{
+    width:100%;
+    height:100%;
+    background-size:100% 100%;
+}
 .finished{
     right: 150px !important;
     color:green;
