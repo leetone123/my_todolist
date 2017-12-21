@@ -6,24 +6,28 @@ const path = require('path')
 
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      //设置反向代理
-      '/task':{
-        //这里是我配置的连接的服务器地址
-        // target:'http://192.168.1.175:8080',
-        target:'http://localhost:9999',
-        changeOrigin: true,
-        pathRewrite:{
-          '^/task': '/task'
-        }
+      //开启反向代理【只针对本地开发环境有效，正式发布还是和后端放到同一目录就不需要跨域】
+      '/task':{//这是自己配置的名字
+        target: 'http://localhost:9999',//这个路径是代理到本地后端框架里面
+        changeOrigin: true,//开启代理
+        pathRewrite: {'^/task':'/task'}//这里重写路径就代理到对应的地址
       }
-
     },
-
+    // proxyTable: {
+    //   '/front':{
+    //     //这里是我配置的连接的服务器地址
+    //     // target:'http://192.168.1.175:8080',
+    //     target:'http://b.tingzhijun.com',
+    //     changeOrigin: true,
+    //     pathRewrite:{
+    //       '^/front': '/front'
+    //     }
+    //   }
+    // },
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
