@@ -15,7 +15,7 @@
                        @change="updateItem(todo)"
                        v-model="todo.done"
                 />
-                <label @click.prevent="updateItem(todo)">{{ index+1 }}.{{ todo.value }}</label>
+                <label style="width: 200px;" @click.prevent="updateItem(todo)">{{ index+1 }}.{{ todo.value }}</label>
                 <time class="finished" v-if="todo.done==true">完成于：{{ todo.finished | date }}</time>
                 <time>{{ todo.created | date }}</time>
                 <button @click.prevent="delItem(todo)"></button>
@@ -58,7 +58,7 @@
         methods: {
             getList() {
                 // GET /someUrl
-                axios.post('list.html',{},config).then(response => {
+                axios.get('list.html',{params:{}},config).then(response => {
                     var json = JSON.parse(response.data.result);
                     console.log(json)
                     var len = json.resultList.length;
