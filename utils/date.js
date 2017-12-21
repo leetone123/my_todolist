@@ -25,3 +25,6 @@ export function formatDate(date, fmt) {
 function padLeftZero(str) {
     return ('00' + str).substr(str.length);
 }
+//本地测试时置为空，生成环境打包时设为本地url
+export const baseurl ="http://101.132.160.79:9999";
+// export const baseurl ="";

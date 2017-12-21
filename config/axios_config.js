@@ -3,8 +3,9 @@ import Qs from 'qs'
 export default{
 
 	  url: '/task',
-	  baseURL: '/task/',//本地开发环境的地址
-	  // baseURL: 'http://localhost:9999/task/',  //正式发布的地址
+	//   baseURL: '/task/',//本地开发环境的地址
+		// baseURL: 'http://localhost:9999/',  //正式发布的地址
+		baseURL:'',
 	  method:'POST',
 	  
 	  transformRequest: [function (data) {

@@ -30,12 +30,11 @@
     import moment from 'moment'
     import 'moment/locale/zh-cn'
     moment.locale('zh-cn')
-    
     //使用axios配置文件
     import axios from 'axios'
     import config from '../config/axios_config'
-    //使用日期格式化插件
-    import {formatDate} from '../utils/date'
+    //使用日期格式化插件还有基础Url
+    import {formatDate,baseurl} from '../utils/date'
     export default {
         name: 'app',
         data () {
@@ -58,7 +57,7 @@
         methods: {
             getList() {
                 // GET /someUrl
-                axios.get('list.html',{params:{}},config).then(response => {
+                axios.get(`${baseurl}/task/list.html`).then(response => {
                     var json = JSON.parse(response.data.result);
                     console.log(json)
                     var len = json.resultList.length;
@@ -75,18 +74,17 @@
                     }
                 }, response => {
                     console.log("error");
-                },config);
+                });
             },
             addItem() {                
                 //开始保存数据到数据库
-                axios.post('addTask.html',
+                axios.post(`${baseurl}/task/addTask.html`,
                     {
                         taskName: this.newTodo,
                         // createDate: formatDate(new Date(),"yyyy-MM-dd HH:mm:ss"),
                         delFlag: '0',
                         userId: '001'
-                    },
-                    config)
+                    },config)
                     .then(response =>{
                         console.log(response.data);
                         //获取请求后刷新页面
@@ -100,7 +98,7 @@
                 this.todos = this.todos.filter((x) => x !== todo)
                 console.log(todo.id)
                 //同时删除数据库数据
-                axios.post('delete.html',
+                axios.post(`${baseurl}/task/delete.html`,
                 {
                     taskId: todo.id
                 },config).then(response=>{
@@ -113,7 +111,7 @@
             },
             updateItem(todo){
                 //更新任务状态
-                axios.post('update.html',
+                axios.post(`${baseurl}/task/update.html`,
                 {
                     taskId: todo.id,
                     taskStatus: todo.done
