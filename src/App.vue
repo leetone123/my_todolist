@@ -32,9 +32,7 @@
     moment.locale('zh-cn')
     //使用axios配置文件
     import axios from 'axios'
-    import config from '../config/axios_config'
-    //使用日期格式化插件还有基础Url
-    import {formatDate,baseurl} from '../utils/date'
+    import config,{baseurl} from '../config/axios_config'
     export default {
         name: 'app',
         data () {
