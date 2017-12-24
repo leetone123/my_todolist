@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <h1>{{title}}</h1>
+        <my-header></my-header>
         <div class="top-img" ><img src="./assets/top.jpg" alt=""></div>
         <ul class="todos">
             <li>
@@ -25,6 +25,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+    import MyHeader from './components/MyHeader'
     import './assets/site.less'
     import './assets/todos.less'
     import moment from 'moment'
@@ -35,6 +36,10 @@
     import config,{baseurl} from '../config/axios_config'
     export default {
         name: 'app',
+        //加载头部脚部组建
+        components: {
+            MyHeader
+        },
         data () {
             return {
                 newTodo:'',
@@ -130,7 +135,9 @@
     text-align:center;
 }
 .top-img img{
-    width:100%;
+    min-width: 230px;
+    max-width: 550px;
+    max-width:100%;
     height:100%;
     background-size:100% 100%;
 }

@@ -2,8 +2,6 @@
 import Qs from 'qs'
 export default{
 	  url: '/task',
-	//   baseURL: '/task/',//本地开发环境的地址
-		// baseURL: 'http://localhost:9999/',  //正式发布的地址
 		baseURL:'',
 	  method:'POST',
 	  transformRequest: [function (data) {
@@ -37,5 +35,5 @@ export default{
 }
 //本地测试时置为空，生成环境打包时设为本地url
 // export const baseurl ="http://localhost:9999"; //本地SpringBoot启动时路径
-// export const baseurl =""; //本地Vue启动时的路径
-export const baseurl = "http://101.132.160.79:9999"; //正式发布的路径配置
+export const baseurl =""; //本地Vue启动时的路径
+// export const baseurl = "http://101.132.160.79:9999"; //正式发布的路径配置
